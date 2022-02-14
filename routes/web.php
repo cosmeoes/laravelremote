@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 //sources: indeed,remoteio,ziprecluter,glassdoor,larajobs,authenticjobs,weworkremotely,remoteio
 // linkedin https://www.linkedin.com/jobs/search/?f_WT=2&geoId=92000000&keywords=laravel
 Route::get('/', function () {
-    (new \App\Importers\Indeed())->import();
+    (new \App\Importers\RemoteOk())->import();
 });
 

@@ -16,12 +16,14 @@ return new class extends Migration
         Schema::create('job_posts', function (Blueprint $table) {
             $table->id();
             $table->string('position');
-            $table->string('location');
+            $table->string('location')->nullable();
             $table->string('job_type');
             $table->string('company');
+            $table->string('body');
             $table->float('salary_max')->default(0);
             $table->float('salary_min')->default(0);
             $table->string('salary_currency')->nullable();
+            $table->string('salary_unit')->nullable();
             $table->string('source_name');
             $table->string('source_url');
             $table->string('apply_url');

@@ -24,6 +24,7 @@ class RemoteOk
                 'position' => $job['position'],
                 'location' => $job['location'],
                 'company' => $job['company'],
+                'body' => $job['description'],
                 'source_name' => Sources::$REMOTE_OK,
                 'source_url' => $job['url'],
                 'apply_url' => $job['url'],
@@ -39,7 +40,7 @@ class RemoteOk
         $jsonData = $this->asJson($body);
         return array_merge(
             $this->salaryRange($jsonData, $body),
-            ['job_type' => $jsonData['employmentType']]
+            ['job_type' => strtolower(str_replace("_", " ", $jsonData['employmentType']))],
         );
     }
 
@@ -59,6 +60,7 @@ class RemoteOk
             'salary_currency' => Arr::get($jobData, 'baseSalary.currency'),
             'salary_max' => Arr::get($jobData, 'baseSalary.value.minValue'),
             'salary_min' => Arr::get($jobData, 'baseSalary.value.maxValue'),
+            'salary_unit' => Arr::get($jobData, 'baseSalary.value.unitText')
         ];
     }
 }
