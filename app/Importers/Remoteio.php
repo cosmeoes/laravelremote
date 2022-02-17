@@ -16,11 +16,11 @@ class Remoteio
     public function import()
     {
         $jobs = $this->postURLs()->map(function ($url) {
-            $sourceUrl = $this->baseUrl . '/' . $url;
-             $body = Http::get($sourceUrl)->body();
-             sleep(0.5);
+            $sourceUrl = $this->baseUrl . '/' . ltrim( $url, '\\');
+            $body = Http::get($sourceUrl)->body();
+            sleep(0.5);
 
-             return $this->parseBody($body, $sourceUrl);
+            return $this->parseBody($body, $sourceUrl);
         });
 
         JobPost::storeFromSource($jobs);

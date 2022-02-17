@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 //sources: indeed,remoteio,ziprecluter,glassdoor,larajobs,authenticjobs,weworkremotely
 // linkedin https://www.linkedin.com/jobs/search/?f_WT=2&geoId=92000000&keywords=laravel
-Route::get('/', function () {
-    (new \App\Importers\Remoteio())->import();
-});
+//Route::get('/', function () {
+//    (new \App\Importers\Remoteio())->import();
+//});
 
+
+Route::get('/', [HomeController::class, 'index']);

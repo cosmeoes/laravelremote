@@ -15,7 +15,8 @@ class RemoteOk
 
     public function import()
     {
-        $jobs = collect(Http::get($this->baseUrl)->json())->skip(1)->map(function ($job) {
+        $markdownRenderer = app(\Spatie\LaravelMarkdown\MarkdownRenderer::class);
+        $jobs = collect(Http::get($this->baseUrl)->json())->skip(1)->map(function ($job) use($markdownRenderer) {
             $body = Http::get($job['url'])->body();
             $scarped = $this->scrapeJobData($body);
             sleep(0.5);
@@ -24,7 +25,7 @@ class RemoteOk
                 'position' => $job['position'],
                 'location' => $job['location'],
                 'company' => $job['company'],
-                'body' => $job['description'],
+                'body' => $html = $markdownRenderer->toHtml($job['description']),
                 'source_name' => Sources::$REMOTE_OK,
                 'source_url' => $job['url'],
                 'apply_url' => $job['url'],
