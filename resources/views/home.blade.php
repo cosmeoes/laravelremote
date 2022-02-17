@@ -17,21 +17,34 @@
     </header>
 
     <div class="mx-auto">
-        <div class="flex justify-center bg-gray-200">
-            <form class="p-4">
-                Get a
-                <select name="time" class="rounded-full text-bold bg-white px-2 py-1">
-                    <option value="daily">daily</option>
-                    <option value="daily">weekly</option>
-                </select>
-                email of all new Jobs
-                <input name="email" type="email" placeholder="Type your email..." class="rounded-full text-bold bg-white px-2 py-1 md:w-auto md:mt-0 mt-2 w-full"/>
-                <button type="submit" class="inline-flex border border-red-500 rounded-full focus:outline-none w-full sm:w-auto md:mt-0 mt-2">
+        <div class="bg-gray-200">
+            <div class="flex justify-center">
+                <form class="p-4" method="post" action="{{ route('email.subscribe') }}">
+                    @csrf
+                    Get a
+                    <select name="time" class="rounded-full text-bold bg-white px-2 py-1">
+                        <option value="daily">daily</option>
+                        <option value="daily">weekly</option>
+                    </select>
+                    email of all new Jobs
+                    <input name="email" type="email" placeholder="Type your email..." class="rounded-full text-bold bg-white px-2 py-1 md:w-auto md:mt-0 mt-2 w-full" required/>
+                    <button type="submit" class="inline-flex border border-red-500 rounded-full focus:outline-none w-full sm:w-auto md:mt-0 mt-2">
     <span class="w-full inline-flex items-center justify-center rounded-full self-stretch px-4 py-2 text-sm text-white text-center font-bold uppercase bg-red-500 ring-1 ring-red-500 ring-offset-1 ring-offset-red-500 transform transition-transform group-hover:-translate-y-1 group-hover:-translate-x-1 group-focus:-translate-y-1 group-focus:-translate-x-1">
         Subscribe
     </span>
-                </button>
-            </form>
+                    </button>
+                </form>
+            </div>
+            @error('email')
+            <p class="text-white mt-2 ml-2 text-center text-base fixed top-0 left-0 bg-red-500 rounded p-2"  x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)">{{ $message }}</p>
+            @enderror
+            @error('time')
+            <p class="text-white mt-2 ml-2 text-center text-base fixed top-0 left-0 bg-red-500 rounded p-2"  x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)">{{ $message }}</p>
+            @enderror
+
+            @if(session()->has('success'))
+                <p class="text-white mt-2 ml-2 text-center text-base fixed top-0 left-0 bg-green-500 rounded p-2"  x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)">{{ session('success') }}</p>
+            @endif
         </div>
 
         <div class="md:w-8/12 w-full mx-auto pt-10">
@@ -73,7 +86,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div x-show="open" class="bg-white px-5 py-2 -mt-1 shadow-md " >
+                        <div x-show="open" class="bg-white px-5 py-2 -mt-1 shadow-md body">
                             {!! utf8_decode($job->body) !!}
                         </div>
                     </div>
