@@ -33,6 +33,9 @@ return [
         'server_prefix' => env('MAILCHIMP_SERVER_PREFIX'),
         'api_key' => env('MAILCHIMP_API_KEY'),
         'list_id' => env('MAILCHIMP_LIST_ID')
-    ]
+    ],
+    'slack' => [
+        'hook' => env('SLACK_HOOK')
+    ],
 
 ];

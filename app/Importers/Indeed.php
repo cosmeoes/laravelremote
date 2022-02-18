@@ -4,8 +4,10 @@ namespace App\Importers;
 
 use App\Models\JobPost;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class Indeed
 {
@@ -15,7 +17,12 @@ class Indeed
     {
         $jobs = $this->jobList()->map(function($job)  {
             $sourceUrl = $this->baseUrl . $job['link'];
-            $scarpedData = $this->scrapeData($sourceUrl);
+            try {
+                $scarpedData = $this->scrapeData($sourceUrl);
+            } catch (Exception $e) {
+                Log::error("Indeed importer job $sourceUrl failed with error: \n". $e->getMessage() . ":\n " . $e->getTraceAsString());
+                return false;
+            }
 
             return array_merge($scarpedData, [
                 'position' => $job['displayTitle'],
@@ -29,9 +36,9 @@ class Indeed
                 'source_name' => Sources::$INDEED,
                 'source_url' => $sourceUrl,
                 'apply_url' => $sourceUrl,
-                'source_created_at' => Carbon::createFromTimestamp(strtotime($job['formattedRelativeTime']))
+                'source_created_at' => $job['formattedRelativeTime'] == 'Just posted' ? Carbon::now()->addMinutes(30) : Carbon::createFromTimestamp(strtotime($job['formattedRelativeTime']))
             ]);
-        });
+        })->reject(fn($job) => $job == false);
 
         JobPost::storeFromSource($jobs);
     }

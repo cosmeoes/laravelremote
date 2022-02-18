@@ -8,6 +8,6 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function index() {
-        return view('home', ['jobPosts' => JobPost::orderBy('source_created_at', 'desc')->get()]);
+        return view('home', ['jobPosts' => JobPost::orderBy('source_created_at', 'desc')->simplePaginate(30)]);
     }
 }
