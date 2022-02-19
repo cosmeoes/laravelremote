@@ -1,10 +1,9 @@
 <?php
 
-
 namespace App\Services;
 
-
 use Exception;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Log;
 use MailchimpMarketing\ApiClient;
 
@@ -35,6 +34,41 @@ class Mailchimp
             return true;
         } catch (Exception $e) {
             Log::error("Error adding email to mailchimp $email $time : " . $e->getMessage() . ':' . $e->getTraceAsString());
+        }
+
+        return false;
+    }
+
+    public function sendEmail($html)
+    {
+        try {
+            $response = $this->client->campaigns->create([
+                'type' => "regular",
+                'recipients' => [
+                    'segment_opts' => [
+                        'saved_segment_id' => intval(config('services.mailchimp.daily_segment_id')),
+                    ],
+                    'list_id' => config('services.mailchimp.list_id')
+                ],
+                'settings' => [
+                    'subject_line' => "Today's Laravel Remote Jobs",
+                    'preview_text' => "Take a look at the new jobs at Laravel Remote",
+                    'from_name' => "Laravel Remote",
+                    'reply_to' => "contact@laravelremote.com",
+                    'inline_css' => true
+                ]
+            ]);
+
+
+            $this->client->campaigns->setContent($response->id, [
+                'html' => $html,
+            ]);
+
+            $this->client->campaigns->send($response->id);
+
+            return true;
+        } catch (RequestException $e) {
+            Log::error("Error sending email though mailchimp: " . $e->getMessage() . ':' . $e->getTraceAsString());
         }
 
         return false;
