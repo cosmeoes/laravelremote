@@ -50,7 +50,7 @@
 
                                         @if ($job->salary_max && $job->salary_max != 0)
                                             <span class="px-2 py-1 text-xs uppercase md:rounded-sm rounded-xs bg-opacity-10 bg-black text-gray-900">
-                                                    🤑 $@money($job->salary_min) - $@money($job->salary_max)
+                                                    🤑 $@money(min($job->salary_min, $job->salary_max)) - $@money(max($job->salary_min, $job->salary_max))
                                             </span>
                                         @endif
                                     </div>
