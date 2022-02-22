@@ -7,7 +7,7 @@
                     Get a
                     <select name="time" class="rounded-full text-bold bg-white px-2 py-1">
                         <option value="daily">daily</option>
-                        <option value="daily">weekly</option>
+                        <option value="weekly">weekly</option>
                     </select>
                     email of all new Jobs
                     <input name="email" type="email" placeholder="Type your email..." class="rounded-full text-bold bg-white px-2 py-1 md:w-auto md:mt-0 mt-2 w-full" required/>
