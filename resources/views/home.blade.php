@@ -7,7 +7,7 @@
                     Get a
                     <select name="time" class="rounded-full text-bold bg-white px-2 py-1">
                         <option value="daily">daily</option>
-                        <option value="daily">weekly</option>
+                        <option value="weekly">weekly</option>
                     </select>
                     email of all new Jobs
                     <input name="email" type="email" placeholder="Type your email..." class="rounded-full text-bold bg-white px-2 py-1 md:w-auto md:mt-0 mt-2 w-full" required/>
@@ -50,7 +50,7 @@
 
                                         @if ($job->salary_max && $job->salary_max != 0)
                                             <span class="px-2 py-1 text-xs uppercase md:rounded-sm rounded-xs bg-opacity-10 bg-black text-gray-900">
-                                                    🤑 $@money($job->salary_min) - $@money($job->salary_max)
+                                                    🤑 $@money(min($job->salary_min, $job->salary_max)) - $@money(max($job->salary_min, $job->salary_max))
                                             </span>
                                         @endif
                                     </div>

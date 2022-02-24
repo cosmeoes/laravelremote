@@ -28,9 +28,12 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('money', function ($money) {
             return "<?php echo (new NumberFormatter('en_US', NumberFormatter::PADDING_POSITION))->format($money); ?>";
         });
-
+        
         Str::macro('initials', function($text) {
-            return implode('', array_map(fn($w) => strtoupper($w[0]), explode(' ', $text)));
+            return Str::of($text)
+                ->explode(' ', 2)
+                ->map(fn($word) => strtoupper($word[0]))
+                ->join('');
         });
     }
 }
