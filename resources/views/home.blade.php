@@ -7,7 +7,7 @@
                     Get a
                     <select name="time" class="rounded-full text-bold bg-white px-2 py-1">
                         <option value="daily">daily</option>
-                        <option value="daily">weekly</option>
+                        <option value="weekly">weekly</option>
                     </select>
                     email of all new Jobs
                     <input name="email" type="email" placeholder="Type your email..." class="rounded-full text-bold bg-white px-2 py-1 md:w-auto md:mt-0 mt-2 w-full" required/>
@@ -41,17 +41,25 @@
                                 <div class="md:flex-shrink-0">
                                     <span class="font-500 md:text-xl text-base text-black whitespace-pre-wrap font-extrabold">{{ $job->position }}</span>
                                     <p class="font-400 mb-1 text-gray-900" data-text="true">{{ $job->company }}</p>
-                                    <div class="flex md:flex-nowrap flex-wrap md:items-center md:space-x-4 md:space-y-0 space-y-2">
+                                    <div class="flex md:flex-nowrap flex-wrap md:items-center md:space-x-4 md:space-y-0 font-bold">
                                         @if($job->location)
-                                            <span class="px-2 py-1 text-xs uppercase md:rounded-sm rounded-xs bg-opacity-10 bg-black text-gray-900">
+                                            <span class="px-2 py-1 text-xs uppercase md:rounded-sm rounded-xs bg-opacity-10 bg-black text-gray-900 md:mb-0 mb-2">
                                                     🌏 {{ $job->location }}
                                             </span>
                                         @endif
 
-                                        @if ($job->salary_max && $job->salary_max != 0)
-                                            <span class="px-2 py-1 text-xs uppercase md:rounded-sm rounded-xs bg-opacity-10 bg-black text-gray-900">
-                                                    🤑 $@money(min($job->salary_min, $job->salary_max)) - $@money(max($job->salary_min, $job->salary_max))
+                                        @if ($job->salary_range->isNotEmpty())
+                                            <span class="px-2 py-1 text-xs uppercase md:rounded-sm rounded-xs bg-opacity-10 bg-black text-gray-900 md:mb-0 mb-2">
+                                                    🤑 {{$job->salary_range}}
                                             </span>
+                                        @endif
+
+                                        @if($job->job_type)
+                                            @foreach(explode(',', $job->job_type) as $jobType)
+                                                <span class="px-2 py-1 text-xs uppercase md:rounded-sm rounded-xs bg-opacity-10 bg-black text-gray-900 md:mb-0 mb-2">
+                                                    {{str_replace('-', ' ', trim($jobType))}}
+                                            </span>
+                                                @endforeach
                                         @endif
                                     </div>
                                 </div>

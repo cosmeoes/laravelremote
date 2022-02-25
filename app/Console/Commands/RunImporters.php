@@ -16,7 +16,7 @@ class RunImporters extends Command
      *
      * @var string
      */
-    protected $signature = 'laravel-remote:run-importers {--only=all : comma separated classnames (without namespace)}';
+    protected $signature = 'lr:run-importers {--only=all : comma separated classnames (without namespace)}';
 
     /**
      * The console command description.
