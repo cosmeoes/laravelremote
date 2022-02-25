@@ -26,7 +26,7 @@ class SalaryRange {
             [$max, $min] = [$min, $max];
         }
 
-        if ($max <= 0) {
+        if ($min <= 0) {
             return "Up to " . $this->formatMoney($max) . ' / ' . $this->unit();
         }
 
