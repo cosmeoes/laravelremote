@@ -50,8 +50,9 @@ class SalaryRange {
 
     public function unit()
     {
+        $default = 'year';
         if (!$this->unit) {
-            return '';
+            return $default;
         }
 
         $searches = [
@@ -67,7 +68,7 @@ class SalaryRange {
             }
         }
 
-        return  "year";
+        return $default;
     }
 
     public function currencySymbol()
