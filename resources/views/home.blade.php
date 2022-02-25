@@ -48,9 +48,9 @@
                                             </span>
                                         @endif
 
-                                        @if ($job->salary_max && $job->salary_max != 0)
+                                        @if ($job->salary_range->isNotEmpty())
                                             <span class="px-2 py-1 text-xs uppercase md:rounded-sm rounded-xs bg-opacity-10 bg-black text-gray-900">
-                                                    🤑 $@money(min($job->salary_min, $job->salary_max)) - $@money(max($job->salary_min, $job->salary_max))
+                                                    🤑 {{$job->salary_range}}
                                             </span>
                                         @endif
                                     </div>

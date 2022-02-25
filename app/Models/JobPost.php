@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\SalaryRangeCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +11,8 @@ class JobPost extends Model
     use HasFactory;
 
     protected $casts = [
-        'source_created_at' => 'datetime'
+        'source_created_at' => 'datetime',
+        'salary_range' => SalaryRangeCast::class
     ];
 
     protected $guarded = [];
