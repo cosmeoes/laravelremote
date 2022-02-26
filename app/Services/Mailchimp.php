@@ -39,19 +39,19 @@ class Mailchimp
         return false;
     }
 
-    public function sendEmail($html)
+    public function sendEmail($html, $subject, $segmentId)
     {
         try {
             $response = $this->client->campaigns->create([
                 'type' => "regular",
                 'recipients' => [
                     'segment_opts' => [
-                        'saved_segment_id' => intval(config('services.mailchimp.daily_segment_id')),
+                        'saved_segment_id' => $segmentId,
                     ],
                     'list_id' => config('services.mailchimp.list_id')
                 ],
                 'settings' => [
-                    'subject_line' => "Today's Laravel Remote Jobs",
+                    'subject_line' => $subject,
                     'preview_text' => "Take a look at the new jobs at Laravel Remote",
                     'from_name' => "Laravel Remote",
                     'reply_to' => "contact@laravelremote.com",
