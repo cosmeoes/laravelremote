@@ -3,7 +3,6 @@
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\HomeController;
-use App\Importers\LinkedIn;
 use Illuminate\Support\Facades\Route;
 
 /*
