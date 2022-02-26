@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Importers\Indeed;
+use App\Importers\LinkedIn;
 use App\Importers\Remoteio;
 use App\Importers\RemoteOk;
 use Exception;
@@ -57,6 +58,7 @@ class RunImporters extends Command
                 RemoteOk::class,
                 Remoteio::class,
                 Indeed::class,
+                LinkedIn::class,
             ];
         }
 

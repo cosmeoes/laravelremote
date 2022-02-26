@@ -57,7 +57,7 @@
                                         @if($job->job_type)
                                             @foreach(explode(',', $job->job_type) as $jobType)
                                                 <span class="px-2 py-1 text-xs uppercase md:rounded-sm rounded-xs bg-opacity-10 bg-black text-gray-900 md:mb-0 mb-2">
-                                                    {{str_replace('-', ' ', trim($jobType))}}
+                                                    {{str_replace(['-', '_'], ' ', trim($jobType))}}
                                             </span>
                                                 @endforeach
                                         @endif
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div x-show="open" class="bg-white px-5 py-2 -mt-1 shadow-md body">
-                            {!! utf8_decode($job->body) !!}
+                            {!! $job->body !!}
                         </div>
                     </div>
                 @endforeach
