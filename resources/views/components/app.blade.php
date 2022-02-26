@@ -21,8 +21,10 @@
         gtag('config', 'G-MED7GPDTC5');
     </script>
     @endproduction
+    @livewireStyles
 </head>
 <body class="antialiased bg-gray-100">
     {{ $slot }}
+    @livewireScripts
 </body>
 </html>
