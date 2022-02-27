@@ -1,4 +1,4 @@
-<div class="fixed bottom-0 right-0 px-2 py-2 bg-white border border-gray-200 md:py-4" x-data="{ open: false }">
+<div class="fixed px-2 py-2 bg-white border border-gray-200" :class="open ? 'md:bottom-0 md:right-0 md:top-auto top-0 md:w-auto md:h-auto w-screen h-full' : 'bottom-0 right-0'" x-data="{ open: false }">
     <div class="flex flex-wrap flex-none mb-2 cursor-pointer" @click="open = !open">
         <div class="flex w-full px-3 md:mb-0 space-x-2">
             <p class="font-bold">Have feedback? Need help?</p>
@@ -6,7 +6,7 @@
             <svg x-show="open" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
         </div>
     </div>
-    <form x-show="open" wire:submit.prevent="submit" class="flex flex-col flex-1 space-y-2">
+    <form x-show="open" wire:submit.prevent="submit" class="top-0 flex flex-col flex-1 overflow-scroll space-y-2">
         @if(session()->has('message')) 
             <p class="px-2 text-base text-center text-white bg-green-500 rounded" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)">
                 {{session('message')}}
@@ -18,7 +18,7 @@
                     <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-first-name">
                         Name
                     </label>
-                    <input name="name" wire:model="name" required class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" id="name" type="text">
+                    <input name="name" wire:model="name" required class="block w-full py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none md:px-4 focus:outline-none focus:bg-white" id="name" type="text">
                     @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="email">
                         E-mail
                     </label>
-                    <input name="email" wire:model="email"required class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="email" type="email">
+                    <input name="email" wire:model="email"required class="block w-full py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none md:px-4 focus:outline-none focus:bg-white focus:border-gray-500" id="email" type="email">
                     @error('email') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
             </div>
@@ -37,7 +37,7 @@
                     <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="message">
                         Message
                     </label>
-                    <textarea form="contact" required name="message" wire:model="message" class="block w-full h-48 px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-none no-resize focus:outline-none focus:bg-white focus:border-gray-500" id="message"></textarea>
+                    <textarea form="contact" required name="message" wire:model="message" class="block w-full h-48 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-none md:px-4 no-resize focus:outline-none focus:bg-white focus:border-gray-500" id="message"></textarea>
                     @error('message') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
             </div>
