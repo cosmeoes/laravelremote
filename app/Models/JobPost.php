@@ -29,8 +29,8 @@ class JobPost extends Model
     public static function shouldAddJob($job)
     {
         return JobPost::where('source_url', $job['source_url'])->orWhere('apply_url', $job['apply_url'])->orWhere(function($query) use ($job) {
-            $query->where('position', $job->position)
-                  ->where('company', $job->company)
+            $query->where('position', $job['position'])
+                  ->where('company', $job['company'])
                   ->where('created_at', '>=', now()->addWeek());
         })->doesntExist();
     }
