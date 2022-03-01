@@ -39,7 +39,12 @@
                             </span>
                                 </div>
                                 <div class="md:flex-shrink-0">
-                                    <span class="text-base font-extrabold text-black whitespace-pre-wrap font-500 md:text-xl">{{ $job->position }}</span>
+                                    <span x-data="{ tooltip: false }" @mouseover="tooltip = true" @mouseleave="tooltip = false" class="text-base font-extrabold text-black font-500 md:text-xl">
+                                        {{ \Str::limit($job->position, 50) }}
+                                        @if(strlen($job->position) > 50)
+                                            <div x-show="tooltip" class="absolute p-2 text-xs text-white bg-gray-400 rounded-lg transform">{{ $job->position }}</div>
+                                        @endif
+                                    </span>
                                     <p class="mb-1 text-gray-900 font-400" data-text="true">{{ $job->company }}</p>
                                     <div class="flex flex-wrap font-bold md:flex-nowrap md:items-center md:space-x-4 md:space-y-0">
                                         @if($job->location)
