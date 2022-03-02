@@ -11,3 +11,5 @@
 .body p {
     all: revert;
 }
+
+[x-cloak] { display: none !important; }

@@ -18,7 +18,7 @@
                         <span x-data="{ tooltip: false }" @mouseover="tooltip = true" @mouseleave="tooltip = false" class="text-base font-extrabold text-black font-500 md:text-xl">
                             {{ \Str::limit($job->position, 50) }}
                             @if(strlen($job->position) > 50)
-                                <div x-show="tooltip" class="absolute p-2 text-xs text-white bg-gray-400 rounded-lg transform">{{ $job->position }}</div>
+                                <div x-cloak x-show="tooltip" class="absolute p-2 text-xs text-white bg-gray-400 rounded-lg transform">{{ $job->position }}</div>
                             @endif
                         </span>
                         <p class="mb-1 text-gray-900 font-400" data-text="true">{{ $job->company }}</p>
@@ -49,7 +49,7 @@
                     @foreach($job->tags->filter(fn($tag) => !isset($tags[$tag->id]) )->splice(0, 5) as $tag)
                         <span x-data="{ tooltip: false }" class="">
                             <span @mouseover="tooltip = true" @mouseleave="tooltip = false" @click.stop="$wire.addTag(@js($tag->only('id', 'name')))" class="px-2 py-1 mb-2 text-base font-semibold border-2 border-gray-900 rounded-xl text-gray-black md:mb-0 hover:text-white hover:bg-gray-900">{{ $tag->name }}</span>
-                            <div x-show="tooltip" class="absolute items-center p-2 text-xs leading-tight text-white bg-red-500 rounded-lg transform translate-y-1/4">
+                            <div x-cloak x-show="tooltip" class="absolute items-center p-2 text-xs leading-tight text-white bg-red-500 rounded-lg transform translate-y-1/4">
                                 <svg class="absolute z-10 w-6 h-6 text-red-500 fill-current stroke-current transform -translate-y-1/2" width="8" height="8">
                                     <rect x="12" y="-10" width="8" height="8" transform="rotate(45)" />
                                 </svg>
@@ -68,7 +68,7 @@
                     </a>
                 </div>
             </div>
-            <div x-show="open" class="px-5 py-2 -mt-1 bg-white shadow-md body">
+            <div x-cloak x-show="open" class="px-5 py-2 -mt-1 bg-white shadow-md body">
                 {!! $job->body !!}
             </div>
         </div>
