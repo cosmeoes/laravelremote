@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Casts\SalaryRangeCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class JobPost extends Model
 {
@@ -16,6 +17,26 @@ class JobPost extends Model
     ];
 
     protected $guarded = [];
+
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function hasTag($tag)
+    {
+        return $this->tags()->where('tag_id', $tag->id)->exists();
+    }
+
+    public function addTag($tag)
+    {
+        if ($this->hasTag($tag)) {
+            return;
+        }
+
+        $this->tags()->save($tag);
+    }
 
     public static function storeFromSource($jobs)
     {
