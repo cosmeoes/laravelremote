@@ -26,7 +26,7 @@
             @enderror
         </div>
 
-        <div class="w-full pt-10 mx-auto md:w-8/12">
+        <div class="w-full pt-10 mx-auto lg:w-8/12 md:w-11/12">
             <h2 class="text-2xl font-bold text-black md:text-4xl">Remote Jobs</h2>
             <livewire:job-post-list />
         </div>
