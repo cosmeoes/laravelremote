@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command(RunImporters::class)->daily()->at('02:00')->timezone('America/Los_Angeles');
+        $schedule->command(TagNewPosts::class)->daily()->at('03:00')->timezone('America/Los_Angeles');
         $schedule->command(SendJobAlert::class, ['--type=daily'])->daily()->at('09:00')->timezone('America/Los_Angeles');
         $schedule->command(SendJobAlert::class, ['--type=weekly'])->mondays()->at('09:00')->timezone('America/Los_Angeles');
     }

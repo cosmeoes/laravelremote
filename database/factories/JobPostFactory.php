@@ -32,4 +32,17 @@ class JobPostFactory extends Factory
             'source_created_at' => now(),
         ];
     }
+
+    public function taggable()
+    {
+        return $this->state(function (array $attributes) {
+
+            $tags = config('tags');
+            shuffle($tags);
+            $tagText = reset($tags)['matches'][0];
+            return [
+                'body' => 'contains tag matches ' . $tagText 
+            ];
+        });
+    }
 }

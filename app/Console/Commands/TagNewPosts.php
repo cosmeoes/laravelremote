@@ -31,7 +31,7 @@ class TagNewPosts extends Command
 
         $timestamp = now()->subHours($this->option('hours'));
 
-        return JobPost::where('created_at', '<=', $timestamp)->get();
+        return JobPost::where('created_at', '>=', $timestamp)->get();
     }
 
     public function tag($job) 
