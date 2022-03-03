@@ -2,20 +2,19 @@
 
 namespace App\Importers;
 
-use App\Models\JobPost;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class Indeed
+class Indeed extends Importer
 {
     protected $baseUrl = 'https://www.indeed.com';
 
     public function import()
     {
-        $jobs = $this->jobList()->map(function($job)  {
+        return $this->jobList()->map(function($job)  {
             $sourceUrl = $this->baseUrl . $job['link'];
             try {
                 $scarpedData = $this->scrapeData($sourceUrl);
@@ -39,8 +38,6 @@ class Indeed
                 'source_created_at' => $job['formattedRelativeTime'] == 'Just posted' ? Carbon::now()->addMinutes(30) : Carbon::createFromTimestamp(strtotime($job['formattedRelativeTime']))
             ]);
         })->reject(fn($job) => $job == false);
-
-        JobPost::storeFromSource($jobs);
     }
 
     public function jobList()

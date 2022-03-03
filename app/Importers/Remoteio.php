@@ -3,27 +3,23 @@
 
 namespace App\Importers;
 
-
-use App\Models\JobPost;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 
-class Remoteio
+class Remoteio extends Importer
 {
     public $baseUrl = "https://www.remote.io";
 
     public function import()
     {
-        $jobs = $this->postURLs()->map(function ($url) {
+        return $this->postURLs()->map(function ($url) {
             $sourceUrl = $this->baseUrl . '/' . ltrim( $url, '\\');
             $body = Http::get($sourceUrl)->body();
             sleep(0.5);
 
             return $this->parseBody($body, $sourceUrl);
         });
-
-        JobPost::storeFromSource($jobs);
     }
 
     public function postURLs()

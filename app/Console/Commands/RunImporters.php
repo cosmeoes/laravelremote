@@ -41,7 +41,7 @@ class RunImporters extends Command
         foreach ($importers as $class) {
             try {
                 Log::info("Running " . $class);
-                app($class)->import();
+                app($class)->run();
             } catch (Exception $e) {
                 Log::error("Importer " . $class . " failed with error: \n". $e->getMessage() . ":\n " . $e->getTraceAsString());
             }

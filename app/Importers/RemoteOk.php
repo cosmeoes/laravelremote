@@ -3,20 +3,18 @@
 
 namespace App\Importers;
 
-
-use App\Models\JobPost;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 
-class RemoteOk
+class RemoteOk extends Importer
 {
     protected $baseUrl = "https://remoteok.com/api?tag=laravel";
 
     public function import()
     {
         $markdownRenderer = app(\Spatie\LaravelMarkdown\MarkdownRenderer::class);
-        $jobs = collect(Http::get($this->baseUrl)->json())->skip(1)->map(function ($job) use($markdownRenderer) {
+        return collect(Http::get($this->baseUrl)->json())->skip(1)->map(function ($job) use($markdownRenderer) {
             $body = Http::get($job['url'])->body();
             $scarped = $this->scrapeJobData($body);
             sleep(0.5);
@@ -32,8 +30,6 @@ class RemoteOk
                 'source_created_at' => Carbon::createFromTimestamp($job['epoch'])
             ]);
         });
-
-        JobPost::storeFromSource($jobs->toArray());
     }
 
     public function scrapeJobData($body)

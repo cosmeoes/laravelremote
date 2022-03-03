@@ -2,13 +2,12 @@
 
 namespace App\Importers;
 
-use App\Models\JobPost;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 
-class LinkedIn
+class LinkedIn extends Importer
 {
     public $baseUrl = "https://www.linkedin.com/jobs/search/?keywords=Laravel&f_TPR=r86400&f_WT=2";
     public $host = "https://www.linkedin.com";
@@ -16,7 +15,7 @@ class LinkedIn
 
     public function import()
     {
-        $jobs = collect($this->urls())->map(function ($url) {
+        return collect($this->urls())->map(function ($url) {
             $urlData = parse_url($url);
             $url = $this->host . $urlData['path'];
             try {
@@ -43,8 +42,6 @@ class LinkedIn
                 'source_created_at' => Carbon::createFromTimeString($json['datePosted'])
             ];
         })->filter();
-
-        JobPost::storeFromSource($jobs);
     }
 
     public function urls()
