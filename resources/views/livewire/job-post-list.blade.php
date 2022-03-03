@@ -49,7 +49,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="justify-center flex-1 hidden lg:space-x-3 md:mt-5 md:space-x-1 md:flex">
+                                <div class="justify-center flex-1 hidden lg:space-x-3 md:space-x-1 md:flex">
                                     @foreach($job->tags->filter(fn($tag) => !isset($tags[$tag->id]) )->splice(0, 5) as $tag)
                                         <span x-data="{ tooltip: false }" class="">
                                             <span @mouseover="tooltip = true" @mouseleave="tooltip = false" @click.stop="$wire.addTag(@js($tag->only('id', 'name')))" class="px-2 py-1 mb-2 text-base font-semibold border-2 border-gray-900 rounded-xl text-gray-black md:mb-0 hover:text-white hover:bg-gray-900 whitespace-nowrap">{{ $tag->name }}</span>
