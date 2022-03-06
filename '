@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\JobPost;
+use Illuminate\Http\Request;
+use Illuminate\Mail\Markdown;
+
+class JobPostController extends Controller
+{
+    public function store(Request $request)
+    {
+        $validated = $request->all();
+        JobPost::create([
+            'company' => $validated['company_name'],
+            'position' => $validated['position'],
+            'job_type' => $validated['job_type'],
+            'location' => $validated['location'],
+            'salary_min' => $validated['salary_min'],
+            'salary_max' => $validated['salary_max'],
+            'salary_currency' => $validated['salary_currency'],
+            'salary_unit' => $validated['salary_unit'],
+            'body' => Markdown::parse($validated['body']),
+            'apply_url' => $validated['apply_url'],
+            'source_url' => $validated['apply_url'],
+            'source_name' => "laravel_remote",
+            'source_created_at' => now(),
+        ]);
+        return response()->json([], 201);
+    }
+}

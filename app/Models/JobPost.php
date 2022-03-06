@@ -6,6 +6,7 @@ use App\Casts\SalaryRangeCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class JobPost extends Model
 {
@@ -13,11 +14,16 @@ class JobPost extends Model
 
     protected $casts = [
         'source_created_at' => 'datetime',
-        'salary_range' => SalaryRangeCast::class
+        'salary_range' => SalaryRangeCast::class,
+        'visible' => 'boolean',
     ];
 
     protected $guarded = [];
 
+    public function order(): HasOne
+    {
+        return $this->hasOne(Order::class);
+    }
 
     public function tags(): BelongsToMany
     {
