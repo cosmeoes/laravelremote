@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('job_post_id')->constrained();
             $table->integer('total');
             $table->string('color');
-            $table->boolean('pinned');
+            $table->boolean('sticky');
             $table->integer('discount');
             $table->boolean('paid');
             $table->string('checkout_session');

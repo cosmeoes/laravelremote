@@ -12,7 +12,12 @@ class Order extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'pinned' => 'boolean',
+        'sticky' => 'boolean',
         'paid' => 'boolean'
     ];
+
+    public static function makeOrder()
+    {
+
+    }
 }

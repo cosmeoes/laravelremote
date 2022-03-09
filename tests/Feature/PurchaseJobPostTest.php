@@ -26,21 +26,23 @@ class PurchaseJobPostTest extends TestCase
 
         $tagsIds = Tag::factory(3)->create()->pluck('id')->toArray();
         $response = $this->json('POST', route('job-post.create'), [
-            'company_name' =>  'Test company',
-            'position' =>  'Laravel TDD Developer',
-            'job_type' =>  'Full time',
-            'tags' => $tagsIds,
-            'location' => 'Worldwide',
+            'job_post' => [
+                'company' =>  'Test company',
+                'position' =>  'Laravel TDD Developer',
+                'job_type' =>  'Full time',
+                'tags' => $tagsIds,
+                'location' => 'Worldwide',
+                'salary_min' => 60000,
+                'salary_max' => 120000,
+                'salary_currency' => 'USD',
+                'salary_unit' => 'year',
+                'body' => "# This is a remote laravel position",
+                'apply_url' => 'https://laravelremote.com',
+            ],
             'show_logo' => false,
-            'pinned' => true,
+            'sticky' => true,
             'with_company_color' => true,
             'company_color' => "#ff4742",
-            'salary_min' => 60000,
-            'salary_max' => 120000,
-            'salary_currency' => 'USD',
-            'salary_unit' => 'year',
-            'body' => "# This is a remote laravel position",
-            'apply_url' => 'https://laravelremote.com',
         ]);
 
 
@@ -67,7 +69,7 @@ class PurchaseJobPostTest extends TestCase
         $this->assertNotNull((159 + 49 + 159) * 100, $order->total);
         $this->assertNotNull("#ff4742", $order->color);
         $this->assertNull($order->logo);
-        $this->assertTrue($order->pinned);
+        $this->assertTrue($order->sticky);
         $this->assertEquals(0, $order->discount);
         $this->assertNull($order->cupon);
         $this->assertFalse($order->paid);
