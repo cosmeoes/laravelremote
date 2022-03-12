@@ -16,8 +16,19 @@ class Order extends Model
         'paid' => 'boolean'
     ];
 
-    public static function makeOrder()
+    public function isSticky()
     {
+        return $this->sticky;
+    }
 
+    public function hasColorHighlight()
+    {
+        return $this->color != null;
+    }
+
+    public function hasCompanyLogo()
+    {
+        return $this->logo_path != null;
     }
 }
+

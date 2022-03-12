@@ -4,12 +4,12 @@ namespace Tests\Unit;
 
 use App\Helpers\PersistFromSource;
 use App\Models\JobPost;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PersistFromSourceTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function test_stores_array_to_database()
     {
@@ -25,7 +25,7 @@ class PersistFromSourceTest extends TestCase
     {
         $source = JobPost::factory()->make([
             'location' => null,
-            'body' => 'Must be authorized to work in the United states' 
+            'body' => 'Must be authorized to work in the United states'
         ]);
 
         $persistFromSource = app(PersistFromSource::class);

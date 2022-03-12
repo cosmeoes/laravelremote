@@ -5,13 +5,13 @@ namespace Tests\Feature;
 use App\Console\Commands\AddNewTags;
 use App\Console\Commands\TagNewPosts;
 use App\Models\JobPost;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class TagNewPostTest extends TestCase
 {
-    use DatabaseMigrations;
-    
+    use RefreshDatabase;
+
     public function setUp() : void
     {
         parent::setUp();

@@ -5,16 +5,13 @@ namespace Tests\Feature;
 use App\Console\Commands\SendJobAlert;
 use App\Models\JobPost;
 use App\Services\Mailchimp;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Mockery;
-use Mockery\MockInterface;
 use Tests\TestCase;
 
 class SendJobAlertsTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function test_sends_daily_alerts()
     {
@@ -55,7 +52,7 @@ class SendJobAlertsTest extends TestCase
 
             public function __construct() {}
 
-            public function sendEmail($html, $subject, $segmentId) 
+            public function sendEmail($html, $subject, $segmentId)
             {
                 $this->html = $html;
                 $this->subject = $subject;

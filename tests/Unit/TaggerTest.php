@@ -5,13 +5,13 @@ namespace Tests\Unit;
 use App\Console\Commands\AddNewTags;
 use App\Helpers\Tagger;
 use App\Models\JobPost;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 class TaggerTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function setUp() : void
     {

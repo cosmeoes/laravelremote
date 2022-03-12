@@ -19,6 +19,7 @@ class FakePaymentGateway implements PaymentGateway
         $this->checkouts->add((object) [
             'id' => $sessionId,
             'total' => $total,
+            'description' => $productDescription
         ]);
 
         return $sessionId;

@@ -4,12 +4,12 @@ namespace Tests\Unit\Models;
 
 use App\Models\JobPost;
 use App\Models\Tag;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class JobPostTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function test_has_tag()
     {
