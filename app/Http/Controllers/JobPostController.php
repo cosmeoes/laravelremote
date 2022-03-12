@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Billing\PaymentGateway;
+use App\Http\Requests\PurshaseJobPostRequest;
 use App\PendingOrder;
-use Illuminate\Http\Request;
 
 class JobPostController extends Controller
 {
@@ -15,7 +15,7 @@ class JobPostController extends Controller
         $this->paymentGateway = $paymentGateway;
     }
 
-    public function store(Request $request)
+    public function store(PurshaseJobPostRequest $request)
     {
         $pendingOrder = new PendingOrder($request->all());
 
