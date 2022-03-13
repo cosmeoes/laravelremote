@@ -53,6 +53,8 @@ class SendJobAlertsTest extends TestCase
         $testDouble = $this->getMailchimpDouble();
         $this->artisan(SendJobAlert::class, ['--type' => 'daily']);
         $this->assertEquals(0, $testDouble->timeCalled);
+        $this->artisan(SendJobAlert::class, ['--type' => 'weekly']);
+        $this->assertEquals(0, $testDouble->timeCalled);
     }
 
     public function getMailchimpDouble()
