@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Billing\PaymentGateway;
 use App\Http\Requests\PurshaseJobPostRequest;
 use App\PendingOrder;
+use Illuminate\Http\Request;
 
-class JobPostController extends Controller
+class OrderController extends Controller
 {
     protected $paymentGateway;
 
@@ -23,4 +24,15 @@ class JobPostController extends Controller
             'checkout_session' => $pendingOrder->ringUp($this->paymentGateway)
         ], 201);
     }
+
+    public function show($checkoutSession)
+    {
+        $checkout = $this->paymentGateway->checkout($checkoutSession);
+        if (!$checkout) {
+            abort(404);
+        }
+
+        return view('orders.success', ['checkout' => $checkout]);
+    }
+
 }

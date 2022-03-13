@@ -22,7 +22,7 @@ class PendingOrder
 
     public function ringUp(PaymentGateway $paymentGateway)
     {
-        $checkoutSessionId = $paymentGateway->createCheckoutSession($this->total(), $this->position, $this->description());
+        $checkoutSessionId = $paymentGateway->createCheckoutSession($this->total(), $this->position, $this->description(), $this->options['email']);
         $jobPost = $this->createJobPost();
         $this->createOrderFor($jobPost, $checkoutSessionId);
 
@@ -38,6 +38,7 @@ class PendingOrder
             'paid' => false,
             'color' => $this->color(),
             'logo_path' => $this->logoPath(),
+            'email' => $this->options['email'],
             'checkout_session' => $checkoutSession,
         ]));
     }

@@ -30,6 +30,7 @@ class PurshaseJobPostRequest extends FormRequest
             'company_color' => 'required_if:with_company_color,true|regex:/^#[a-fA-F0-9]{6}$/',
             'with_logo' => 'nullable|boolean',
             'logo' => 'required_if:with_logo,true|file',
+            'email' => 'required|email'
         ];
     }
 }

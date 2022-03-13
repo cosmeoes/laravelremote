@@ -4,16 +4,17 @@ namespace Tests\Unit\Billing;
 
 use App\Billing\FakePaymentGateway;
 use App\Billing\InvalidEventException;
-use PHPUnit\Framework\TestCase;
+use App\Billing\StripePaymentGateway;
+use Tests\TestCase;
 
-class FakePaymentGatewayTest extends TestCase
+class StripePaymentGatewayTest extends TestCase
 {
     public function test_creates_checkout()
     {
-        $paymentGateway = new FakePaymentGateway();
+        $paymentGateway = new StripePaymentGateway("sk_test_51KckIwCNTnV9Sv5KUxfNu5JBWMGNvqyyEvKShv8E3StR4GrVPIvpRdTRQj98GNHgu6RiF2FiZzon3WYLo5WVj8n600bU6oLzbm", "");
 
         $checkoutsDuring = $paymentGateway->checkoutsDuring(function ($paymentGateway) use (&$sessionId) {
-            $sessionId = $paymentGateway->createCheckoutSession(30000, "Laravel Remote Developer", "Pinned, custom color, with logo", "john.doe@company.com");
+             $sessionId = $paymentGateway->createCheckoutSession(30000, "Laravel Remote Developer", "Pinned, custom color, with logo", "john.doe@company.com");
         });
 
         $this->assertCount(1, $checkoutsDuring);
@@ -27,7 +28,7 @@ class FakePaymentGatewayTest extends TestCase
 
     public function test_can_create_event()
     {
-        $paymentGateway = new FakePaymentGateway();
+        $paymentGateway = new StripePaymentGateway("sk_test_51KckIwCNTnV9Sv5KUxfNu5JBWMGNvqyyEvKShv8E3StR4GrVPIvpRdTRQj98GNHgu6RiF2FiZzon3WYLo5WVj8n600bU6oLzbm", "test-secret");
 
         $payload = file_get_contents(__DIR__ . '/../../Stubs/stripe-checkout-completed-event.json');
         $signature = $paymentGateway->getValidTestSignature($payload);
@@ -39,7 +40,7 @@ class FakePaymentGatewayTest extends TestCase
     public function test_throws_exception_if_is_invalid_signature()
     {
         $this->expectException(InvalidEventException::class);
-        $paymentGateway = new FakePaymentGateway();
+        $paymentGateway = new StripePaymentGateway("sk_test_51KckIwCNTnV9Sv5KUxfNu5JBWMGNvqyyEvKShv8E3StR4GrVPIvpRdTRQj98GNHgu6RiF2FiZzon3WYLo5WVj8n600bU6oLzbm", "test-secret");
         $payload = json_decode(file_get_contents(__DIR__ . '/../../Stubs/stripe-checkout-completed-event.json'), true);
         $paymentGateway->event($payload, 'invalid-signature');
     }

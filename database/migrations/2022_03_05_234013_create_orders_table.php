@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('logo_path')->nullable();
             $table->integer('discount');
             $table->boolean('paid');
+            $table->string('email');
             $table->string('checkout_session');
             $table->timestamps();
         });

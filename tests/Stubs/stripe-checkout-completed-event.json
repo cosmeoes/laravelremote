@@ -1,0 +1,64 @@
+{
+    "id": "evt_1CiPtv2eZvKYlo2CcUZsDcO6",
+    "object": "event",
+    "api_version": "2018-05-21",
+    "created": 1530291411,
+    "data": {
+        "object": {
+            "id": "cs_test_a1W6aRFnpQe2FPjRK6ctPHPslS5lwURzqbqOzIGDAXTIKbcXVLzcVVMdYu",
+            "object": "checkout.session",
+            "after_expiration": null,
+            "allow_promotion_codes": null,
+            "amount_subtotal": null,
+            "amount_total": null,
+            "automatic_tax": {
+                "enabled": false,
+                "status": null
+            },
+            "billing_address_collection": null,
+            "cancel_url": "https://example.com/cancel",
+            "client_reference_id": null,
+            "consent": null,
+            "consent_collection": null,
+            "currency": null,
+            "customer": null,
+            "customer_creation": null,
+            "customer_details": null,
+            "customer_email": null,
+            "expires_at": 1647128807,
+            "livemode": false,
+            "locale": null,
+            "metadata": {},
+            "mode": "payment",
+            "payment_intent": "pi_1Dq2XO2eZvKYlo2Cr20ZvWCU",
+            "payment_link": null,
+            "payment_method_options": {},
+            "payment_method_types": [
+                "card"
+            ],
+            "payment_status": "unpaid",
+            "phone_number_collection": {
+                "enabled": false
+            },
+            "recovered_from": null,
+            "setup_intent": null,
+            "shipping": null,
+            "shipping_address_collection": null,
+            "shipping_options": [],
+            "shipping_rate": null,
+            "status": "expired",
+            "submit_type": null,
+            "subscription": null,
+            "success_url": "https://example.com/success",
+            "total_details": null,
+            "url": null
+        }
+    },
+    "livemode": false,
+    "pending_webhooks": 0,
+    "request": {
+        "id": null,
+        "idempotency_key": null
+    },
+    "type": "checkout.session.completed"
+}

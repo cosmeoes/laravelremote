@@ -3,10 +3,14 @@
 namespace Tests\Unit;
 
 use App\Models\Order;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
 
 class OrderTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_is_sticky()
     {
         $sticky = Order::make(['sticky' => true]);
@@ -32,5 +36,14 @@ class OrderTest extends TestCase
 
         $this->assertTrue($withLogo->hasCompanyLogo());
         $this->assertFalse($withoutLogo->hasCompanyLogo());
+    }
+
+    public function test_has_singed_edit_url()
+    {
+        $order = Order::factory()->create();
+
+        $url = $order->editURL();
+
+        $this->assertEquals(URL::signedRoute('order.edit', ['id' => $order->id]), $url);
     }
 }

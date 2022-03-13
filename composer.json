@@ -16,6 +16,7 @@
         "livewire/livewire": "^2.10",
         "mailchimp/marketing": "^3.0",
         "spatie/laravel-markdown": "^2.2",
+        "stripe/stripe-php": "^7.116",
         "symfony/intl": "^6.0"
     },
     "require-dev": {

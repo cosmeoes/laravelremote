@@ -109,7 +109,9 @@ class PendingOrderTest extends TestCase
 
     public function test_can_create_a_base_order()
     {
-        $pendingOrder = new PendingOrder();
+        $pendingOrder = new PendingOrder([
+            'email' => 'joe.doe@example.com'
+        ]);
         $job = JobPost::factory()->create();
 
         $pendingOrder->createOrderFor($job, 'test_checkout_session');
@@ -119,6 +121,7 @@ class PendingOrderTest extends TestCase
             $this->assertEquals($pendingOrder->total(), $order->total);
             $this->assertTrue($job->order->is($order));
             $this->assertEquals('test_checkout_session', $order->checkout_session);
+            $this->assertEquals('joe.doe@example.com', $order->email);
             $this->assertFalse($order->paid);
             $this->assertFalse($order->isSticky());
             $this->assertFalse($order->hasColorHighlight());
@@ -129,7 +132,8 @@ class PendingOrderTest extends TestCase
     public function test_can_create_a_sticky_order()
     {
         $pendingOrder = new PendingOrder([
-            'sticky' => true
+            'sticky' => true,
+            'email' => 'joe.doe@example.com'
         ]);
 
         $job = JobPost::factory()->create();
@@ -141,6 +145,7 @@ class PendingOrderTest extends TestCase
             $this->assertEquals($pendingOrder->total(), $order->total);
             $this->assertTrue($job->order->is($order));
             $this->assertEquals('test_checkout_session', $order->checkout_session);
+            $this->assertEquals('joe.doe@example.com', $order->email);
             $this->assertFalse($order->paid);
             $this->assertTrue($order->isSticky());
             $this->assertFalse($order->hasColorHighlight());
@@ -153,6 +158,7 @@ class PendingOrderTest extends TestCase
         $pendingOrder = new PendingOrder([
             'with_company_color' => true,
             'company_color' => '#FFFFFF',
+            'email' => 'joe.doe@example.com'
         ]);
 
         $job = JobPost::factory()->create();
@@ -164,6 +170,7 @@ class PendingOrderTest extends TestCase
             $this->assertEquals($pendingOrder->total(), $order->total);
             $this->assertTrue($job->order->is($order));
             $this->assertEquals('test_checkout_session', $order->checkout_session);
+            $this->assertEquals('joe.doe@example.com', $order->email);
             $this->assertFalse($order->paid);
             $this->assertTrue($order->hasColorHighlight());
             $this->assertEquals("#FFFFFF", $order->color);
@@ -177,7 +184,8 @@ class PendingOrderTest extends TestCase
         Storage::fake('public');
         $pendingOrder = new PendingOrder([
             'with_logo' => true,
-            'logo' => UploadedFile::fake()->image('company_logo.png')
+            'logo' => UploadedFile::fake()->image('company_logo.png'),
+            'email' => 'joe.doe@example.com'
         ]);
 
         $job = JobPost::factory()->create();
@@ -189,6 +197,7 @@ class PendingOrderTest extends TestCase
             $this->assertEquals($pendingOrder->total(), $order->total);
             $this->assertTrue($job->order->is($order));
             $this->assertEquals('test_checkout_session', $order->checkout_session);
+            $this->assertNotNull('joe.doe@example.com', $order->email);
             $this->assertFalse($order->paid);
             $this->assertTrue($order->hasCompanyLogo());
             Storage::disk('public')->assertExists($order->logo_path);
@@ -205,7 +214,8 @@ class PendingOrderTest extends TestCase
             'with_company_color' => true,
             'company_color' => '#FFFFFF',
             'with_logo' => true,
-            'logo' => UploadedFile::fake()->image('company_logo.png')
+            'logo' => UploadedFile::fake()->image('company_logo.png'),
+            'email' => 'joe.doe@example.com'
         ]);
 
         $job = JobPost::factory()->create();
@@ -217,6 +227,7 @@ class PendingOrderTest extends TestCase
             $this->assertEquals($pendingOrder->total(), $order->total);
             $this->assertTrue($job->order->is($order));
             $this->assertEquals('test_checkout_session', $order->checkout_session);
+            $this->assertNotNull('joe.doe@example.com', $order->email);
             $this->assertFalse($order->paid);
             $this->assertTrue($order->hasCompanyLogo());
             Storage::disk('public')->assertExists($order->logo_path);
@@ -243,6 +254,7 @@ class PendingOrderTest extends TestCase
             'salary_unit' => 'year',
             'body' => "# This is a remote laravel position",
             'apply_url' => 'https://laravelremote.com',
+            'email' => 'john.doe@example.com'
         ]);
 
         $checkoutSession = $pendingOrder->ringUp($paymentGateway);
@@ -251,6 +263,7 @@ class PendingOrderTest extends TestCase
         $jobPost = JobPost::first();
         $this->assertNotNull($jobPost->order);
         $this->assertNotNull($pendingOrder->total(), $jobPost->order->total);
+        $this->assertNotNull('joe.doe@example.com', $jobPost->order->email);
         $this->assertEquals('Laravel TDD Developer', $jobPost->position);
         $this->assertEquals('Full time', $jobPost->job_type);
         $this->assertEquals($tagsIds, $jobPost->tags->pluck('id')->toArray());
@@ -266,7 +279,7 @@ class PendingOrderTest extends TestCase
 
         $checkout = $paymentGateway->checkout($checkoutSession);
         $this->assertNotNull($checkout);
-        $this->assertEquals($pendingOrder->total(), $checkout->total);
-        $this->assertEquals($pendingOrder->description(), $checkout->description);
+        $this->assertEquals($pendingOrder->total(), $checkout->amount_total);
+        $this->assertEquals($jobPost->position, $paymentGateway->lineItems($checkoutSession)['data']['0']['description']);
     }
 }

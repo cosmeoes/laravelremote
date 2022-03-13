@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\CompletedOrderController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\JobPostController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,5 +30,14 @@ Route::post('/email-subscribe', [EmailController::class, 'store'])->name('email.
 Route::get('/post-a-job', [ContactController::class, 'index'])->name('post.job');
 Route::post('/job-contact', [ContactController::class, 'store'])->name('contact.store');
 
-Route::post('/hire-remote-laravel-developers', [JobPostController::class, 'store'])
-    ->name('job-post.create');
+Route::post('/hire-remote-laravel-developers', [OrderController::class, 'store'])
+    ->name('order.create');
+
+Route::get('/order/{id}/edit', [OrderController::class, 'edit'])
+    ->name('order.edit');
+
+Route::post('/fulfill-order', [CompletedOrderController::class, 'store'])
+    ->name('completed-order.store');
+
+Route::get('/success/{checkout_session}', [OrderController::class, 'show'])
+    ->name('checkout.success');
