@@ -57,7 +57,7 @@ class RunImporters extends Command
             return [
                 RemoteOk::class,
                 Remoteio::class,
-                Indeed::class,
+//                Indeed::class, added cloudflare
                 LinkedIn::class,
             ];
         }

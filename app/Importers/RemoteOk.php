@@ -43,7 +43,7 @@ class RemoteOk extends Importer
 
     public function asJson($body)
     {
-        preg_match('%<script type="application/ld\+json">({.+"@type":"JobPosting"[^<]+})</script>%s', $body, $match);
+        preg_match('%<script type="application\/ld\+json">\n\s{9}({"@context":"http://schema.org","@type":"JobPosting".+)\n\s{8}</script>%s', $body, $match);
         return json_decode($match[1], true);
     }
 

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 class Indeed extends Importer
 {
     protected $baseUrl = 'https://www.indeed.com';
+    public $userAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:96.0) Gecko/20100101 Firefox/96.0";
 
     public function import()
     {
@@ -42,8 +43,13 @@ class Indeed extends Importer
 
     public function jobList()
     {
-        $body = Http::get($this->baseUrl . "/jobs?q=laravel&l=Remote&sort=date")->body();
+        $body = Http::withUserAgent($this->userAgent)->get($this->baseUrl . "/jobs?q=laravel&l=Remote&sort=date")->body();
         preg_match('@window\.mosaic\.providerData\["mosaic\-provider\-jobcards"\]=({.+})@', $body, $matches);
+        if (! isset($matches[1])) {
+            dd($body);
+            dump($matches);
+            dd($this->baseUrl . "/jobs?q=laravel&l=Remote&sort=date");
+        }
         return collect(Arr::get(json_decode($matches[1], true), 'metaData.mosaicProviderJobCardsModel.results'));
     }
 
@@ -62,7 +68,7 @@ class Indeed extends Importer
 
     public function scrapeData($sourceUrl)
     {
-        $body = Http::get($sourceUrl)->body();
+        $body = Http::withUserAgent($this->userAgent)->get($sourceUrl)->body();
         sleep(0.5);
         $jsonData = $this->asJson($body);
         return [
