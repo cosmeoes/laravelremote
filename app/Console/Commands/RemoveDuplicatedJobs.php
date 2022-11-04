@@ -55,6 +55,7 @@ class RemoveDuplicatedJobs extends Command
         $deleted = 0;
         $jobs->skip(1)->each(function ($job) use (&$deleted) {
             $deleted++;
+            $job->tags()->detach();
             $job->delete();
         });
 

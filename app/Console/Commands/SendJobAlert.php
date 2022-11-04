@@ -35,6 +35,7 @@ class SendJobAlert extends Command
         $jobs = $this->jobs();
         if ($jobs->isEmpty()) {
             Log::warning('Not sending daily, no new jobs');
+            return 0;
         }
 
         $mailchimp->sendEmail(view('email.new-jobs-notification', ['jobs' => $jobs])->render(), $this->subject(), $this->segmentId());

@@ -6,6 +6,7 @@ namespace App\Importers;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class RemoteOk extends Importer
 {
